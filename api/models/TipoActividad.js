@@ -1,5 +1,5 @@
 /**
- * Tipopersona.js
+ * TipoActividad.js
  *
  * @description :: A model definition.  Represents a database table/collection/etc.
  * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
@@ -8,15 +8,17 @@
 module.exports = {
 
   attributes: {
-    id: {
+    id:{
       type: 'number',
-      columnName: 'idtipopersona',
-      required: true
+      columnName: 'idtipoactividad',
+      required: true,
     },
     descripcion: { 
-      type: 'string',
-      required: true
-    }
+      type: 'string', 
+      required: true 
+    },
+
   },
+
 };
 

@@ -13,8 +13,14 @@ module.exports = {
       columnName: 'idtipoespacio',
       required: true
     },
-    codigo: { type: 'string', required: false },
-    descripcion: { type: 'string', required: true },
+    codigo: { 
+      type: 'string', 
+      required: false 
+    },
+    descripcion: { 
+      type: 'string', 
+      required: true 
+    },
   },
 
 };
