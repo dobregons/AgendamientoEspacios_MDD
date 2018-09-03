@@ -27,7 +27,7 @@ module.exports.routes = {
   '/': {
     view: 'pages/homepage'
   },
-
+  'POST /tipoespacio':            { action: 'tipoespacio/create' },
   /***************************************************************************
   *                                                                          *
   * More custom routes here...                                               *

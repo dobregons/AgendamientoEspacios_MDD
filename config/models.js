@@ -15,7 +15,7 @@
 
 module.exports.models = {
 
-
+  connection: "postgres",
   /***************************************************************************
   *                                                                          *
   * Whether the `.create()` and `.update()` model methods should ignore      *
@@ -53,7 +53,7 @@ module.exports.models = {
   *                                                                          *
   ***************************************************************************/
 
-  // migrate: 'alter',
+  migrate: 'safe',
 
 
   /***************************************************************************
@@ -67,10 +67,11 @@ module.exports.models = {
   * > https://sailsjs.com/docs/concepts/orm/model-settings#?attributes       *
   *                                                                          *
   ***************************************************************************/
-
   attributes: {
-    createdAt: { type: 'number', autoCreatedAt: true, },
-    updatedAt: { type: 'number', autoUpdatedAt: true, },
+    // createdAt: { type: 'number', autoCreatedAt: false, },
+    // updatedAt: { type: 'number', autoUpdatedAt: false, },
+    // createdAt: { type: 'number', autoCreatedAt: false, },
+    // updatedAt: { type: 'number', autoUpdatedAt: false, },
     id: { type: 'number', autoIncrement: true, },
     //--------------------------------------------------------------------------
     //  /\   Using MongoDB?
