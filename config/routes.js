@@ -27,7 +27,23 @@ module.exports.routes = {
   '/': {
     view: 'pages/homepage'
   },
-  'POST /tipoespacio':            { action: 'tipoespacio/create' },
+  '/home': 'HomeController.home',
+
+  'POST /tipoespacio': { action: 'tipoespacio/create' },
+  //Auth Routes
+  'GET /login': { view: 'pages/auth/login' },
+  'GET /register': { view: 'pages/auth/registro' },
+  'POST /login': 'AuthController.login',
+  'POST /user': 'persona/crearpersona',
+  '/logout': 'AuthController.logout',
+  //Reserva Routes
+  '/reserva' : 'ReservaController.reserva',
+  //Espacio Routes
+  '/crearespacio' : 'EspacioController.crearespacio',
+  'POST /espacio': { action: 'coordinador/crearespacio' },
+  //Email routes
+  'POST /enviarcorreoreservarealizada': { action: 'clienteemail/enviarcorreoreservarealizada' },
+  'POST /enviarcorreoreservacancelada': { action: 'clienteemail/enviarcorreoreservacancelada' },
   /***************************************************************************
   *                                                                          *
   * More custom routes here...                                               *
