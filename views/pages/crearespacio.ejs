@@ -7,12 +7,12 @@
             <div class="form-group">
                 <input class="form-control" name="nombre" type="text" placeholder="&#128100;  Nombre" required autofocus>
             </div>
-            <select class="form-control" data-style="btn-info" name="selectpicker">
+            <select class="form-control" data-style="btn-info" name="idtipoespacio">
                 <optgroup label="Select Table">
                     <option value="">Selecciona el tipo de espacio</option>
                     <% tiposespacio.forEach(function(row){ %>
-                        <option value="<%= row %>">
-                            <%= row %>
+                        <option value="<%= row.idtipoespacio %>">
+                            <%= row.descripcion %>
                         </option>
                         <% }) %>
                 </optgroup>
