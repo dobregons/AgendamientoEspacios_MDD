@@ -58,7 +58,8 @@ module.exports.datastores = {
     port: 5432,
     user: 'postgres',
     password: 'Exsis.2017',
-    database: 'MDD_Proyecto'
+    database: 'MDD_Proyecto',
+    schema: true
   }
 
 };
