@@ -8,12 +8,12 @@
 module.exports = {
 
   attributes: {
-    id: {
-      type: 'number',
-      columnName: 'idreserva',
-      required: true,
-      autoIncrement: true
-    },
+    // id: {
+    //   type: 'number',
+    //   columnName: 'idreserva',
+    //   required: true,
+    //   autoIncrement: true
+    // },
     idespacio: { 
       type: 'number', 
       required: true 

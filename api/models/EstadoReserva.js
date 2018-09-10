@@ -9,11 +9,11 @@ module.exports = {
 
   attributes: {
 
-    id:{
-      type: 'number',
-      columnName: 'idestado',
-      required: true,
-    },
+    // id:{
+    //   type: 'number',
+    //   columnName: 'idestado',
+    //   required: true,
+    // },
     descripcion: { 
       type: 'string', 
       required: true 

@@ -18,6 +18,7 @@
     "bcrypt-nodejs": "0.0.3",
     "grunt": "1.0.1",
     "jsonwebtoken": "^8.3.0",
+    "moment": "^2.22.2",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
 >>>>>>> 050357926c28f132bb91ce986d4bfd9269f3e4cc
