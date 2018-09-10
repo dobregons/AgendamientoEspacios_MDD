@@ -9,12 +9,12 @@ module.exports = {
 
   attributes: {
 
-    id: {
-      type: 'number',
-      columnName: 'idespacio',
-      required: true,
-      autoIncrement: true
-    },
+    // id: {
+    //   type: 'number',
+    //   columnName: 'idespacio',
+    //   required: true,
+    //   autoIncrement: true
+    // },
     idtipoespacio: { 
       type: 'number', 
       required: true 

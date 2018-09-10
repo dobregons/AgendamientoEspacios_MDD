@@ -8,11 +8,11 @@
 module.exports = {
 
   attributes: {
-    id: {
-      type: 'number',
-      columnName: 'idtipopersona',
-      required: true
-    },
+    // id: {
+    //   type: 'number',
+    //   columnName: 'idtipopersona',
+    //   required: true
+    // },
     descripcion: { 
       type: 'string',
       required: true

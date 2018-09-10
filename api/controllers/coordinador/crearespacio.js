@@ -28,8 +28,11 @@ module.exports = {
 
     if (req.user) {
       // logged in
+      
       var espacio = new Object();
-      espacio.fechaingreso = Date.now();
+      //espacio.fechaingreso = Date.now();
+      espacio.fechaingreso =  await sails.helpers.generatedate();
+      espacio.fechagreso =  await sails.helpers.generatedate();
       espacio.idresponsable = req.user.id;
       espacio.idtipoespacio = inputs.idtipoespacio;
       espacio.nombre = inputs.nombre;
