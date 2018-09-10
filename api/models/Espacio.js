@@ -15,39 +15,39 @@ module.exports = {
     //   required: true,
     //   autoIncrement: true
     // },
-    idtipoespacio: { 
-      type: 'number', 
-      required: true 
+    idtipoespacio: {
+      type: 'number',
+      required: true
     },
-    idresponsable: { 
-      type: 'number', 
-      required: true 
+    idresponsable: {
+      type: 'number',
+      required: true
     },
-    nombre: { 
-      type: 'string', 
-      required: true 
+    nombre: {
+      type: 'string',
+      required: true
     },
-    descripcion: { 
-      type: 'string', 
-      required: false 
+    descripcion: {
+      type: 'string',
+      required: false
     },
-    fechaingreso: { 
-      type: 'ref', 
-      required: true, 
-      columnType: 'timestamp' 
-    },
-    fechaegreso: { 
-      type: 'ref', 
-      required: false, 
+    fechaingreso: {
+      type: 'ref',
+      required: true,
       columnType: 'timestamp'
     },
-    capacidad: { 
-      type: 'number', 
-      required: false 
+    fechaegreso: {
+      type: 'ref',
+      required: false,
+      columnType: 'timestamp'
     },
-    numcomputadores: { 
-      type: 'number', 
-      required: false 
+    capacidad: {
+      type: 'number',
+      required: false
+    },
+    numcomputadores: {
+      type: 'number',
+      required: false
     },
   },
 };
