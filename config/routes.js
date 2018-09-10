@@ -33,6 +33,7 @@ module.exports.routes = {
   //Auth Routes
   'GET /login': { view: 'pages/auth/login' },
   'GET /register': { view: 'pages/auth/registro' },
+  'GET /reserva': { view: 'pages/reserva' },
   'POST /login': 'AuthController.login',
   'POST /user': 'persona/crearpersona',
   '/logout': 'AuthController.logout',

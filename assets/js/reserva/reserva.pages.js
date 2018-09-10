@@ -135,3 +135,36 @@ $( function() {
       $( "#combobox" ).toggle();
     });
   } );
+
+  $(document).ready(function() {
+  
+        // page is now ready, initialize the calendar...
+  
+        $('#calendar').fullCalendar({
+          defaultDate: new Date(),
+          defaultView:'agendaDay',
+          events: [
+            {
+              title  : 'event3',
+              start  : '2018-09-10T12:30:00',
+              allDay : false // will make the time show
+            }
+            // etc...
+          ],
+          color: 'yellow',   // an option!
+          textColor: 'black',
+          selectable: true,
+          select:function(start,end,event,view){
+            var abc = prompt('Enter Title');
+            var allDay = !start.hasTime && !end.hasTime;
+            var newEvent = new Object();
+            newEvent.title = abc;
+            newEvent.start = moment(start).format();
+            newEvent.allDay = false;
+            $('#calendar').fullCalendar('renderEvent', newEvent);
+
+          }
+          // an option!
+        })
+  
+  });
