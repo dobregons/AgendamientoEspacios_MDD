@@ -9,19 +9,12 @@
     "@sailshq/lodash": "^3.10.3",
     "@sailshq/socket.io-redis": "^5.2.0",
     "async": "2.0.1",
-<<<<<<< HEAD
-    "fs": "0.0.1-security",
-    "googleapis": "^27.0.0",
-    "grunt": "1.0.1",
-    "readline": "^1.3.0",
-=======
     "bcrypt-nodejs": "0.0.3",
     "grunt": "1.0.1",
     "jsonwebtoken": "^8.3.0",
     "moment": "^2.22.2",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
->>>>>>> 050357926c28f132bb91ce986d4bfd9269f3e4cc
     "sails": "^1.0.2",
     "sails-hook-email": "^0.12.1",
     "sails-hook-grunt": "^3.0.2",
