@@ -44,7 +44,9 @@ module.exports.routes = {
   'POST /coordinador/creardisponibilidad': 'coordinado/creardisponibilidad',
   //Espacio Routes
   '/crearespacio' : 'EspacioController.crearespacio',
+  'GET espacio//modificarespacio/:idespacio' :'EspacioController.modificarespacio',
   'POST /espacio': { action: 'coordinador/crearespacio' },
+  'POST espacio//modificarespacio': { action: 'coordinador/crearespacio' },
   //Email routes
   'POST /enviarcorreoreservarealizada': { action: 'clienteemail/enviarcorreoreservarealizada' },
   'POST /enviarcorreoreservacancelada': { action: 'clienteemail/enviarcorreoreservacancelada' },

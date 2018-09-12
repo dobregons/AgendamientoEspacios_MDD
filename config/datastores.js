@@ -57,7 +57,7 @@ module.exports.datastores = {
     host: 'localhost',
     port: 5432,
     user: 'postgres',
-    password: 'Exsis.2017',
+    password: '009008007tulio',
     database: 'MDD_Proyecto',
     schema: true
   }

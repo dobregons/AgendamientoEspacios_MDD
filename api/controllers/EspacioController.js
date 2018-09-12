@@ -13,5 +13,22 @@ module.exports = {
             return res.redirect('/');
         }
 
+    },
+    modificarespacio: async function (req, res) {
+        //if (req.user) {
+        var _espacio = await Espacio.find({id : req.query.idespacio});
+        if(_espacio.length > 0 ){
+            var tiposespacio = Tipoespacio.find({},function(err,tiposespacio){ 
+                return res.view("pages/modificarespacio", {
+                    user: req.user,
+                    tiposespacio: tiposespacio,
+                    espacio:_espacio[0]
+                }); 
+            });
+        }
+        else {
+          return res.redirect('/');
+        }
+
     }
 };
