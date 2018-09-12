@@ -43,3 +43,19 @@ module.exports.enviarCorreoReservaCancelada = function(obj)
         function (err) { console.log(err || "Correo de reserva cancelada enviado!"); }
     )
 }
+
+module.exports.enviarCorreoOlvidoContrasena = function(obj)
+{
+    sails.hooks.email.send(
+        "olvidoContrasena",
+        {
+            Name: obj.nombres,
+            NewPassword: obj.newPassword
+        },
+        {
+            to: obj.email,
+            subject: "Recuperación de Contraseña"
+        },
+        function (err) { console.log(err || "Correo de recuperación de contraseña enviado!"); }
+    )
+}

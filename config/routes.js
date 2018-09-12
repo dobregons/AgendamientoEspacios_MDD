@@ -33,12 +33,15 @@ module.exports.routes = {
   //Auth Routes
   'GET /login': { view: 'pages/auth/login' },
   'GET /register': { view: 'pages/auth/registro' },
-  'GET /reserva': { view: 'pages/reserva' },
+  'GET /reserva/consultarreservaporespacio/:idespacio': 'reserva/consultarreservaporespacio',
   'POST /login': 'AuthController.login',
   'POST /user': 'persona/crearpersona',
   '/logout': 'AuthController.logout',
+  '/olvidarcontrasena' : { view: 'pages/auth/olvidarcontrasena' },
+  'POST /olvidarcontrasena' : 'AuthController.forgotpassword',
   //Reserva Routes
   '/reserva' : 'ReservaController.reserva',
+  'POST /coordinador/creardisponibilidad': 'coordinado/creardisponibilidad',
   //Espacio Routes
   '/crearespacio' : 'EspacioController.crearespacio',
   'POST /espacio': { action: 'coordinador/crearespacio' },

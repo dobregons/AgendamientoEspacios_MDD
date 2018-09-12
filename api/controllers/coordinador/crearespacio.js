@@ -65,9 +65,8 @@ module.exports = {
       return exits.success();
     } else {
       // not logged in
-    }
-    return exits.success();
-
+      return res.redirect('/');
+    }    
   }
 
 
