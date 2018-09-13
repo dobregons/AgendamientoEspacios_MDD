@@ -5,6 +5,11 @@
                 <div class="panel">
                     <h2>Registro</h2>
                     <p>Para registrarte en el aplicativo por favor diligencia el siguiente formulario.</p>
+                    <% if(typeof mensaje != 'undefined' && mensaje){ %>
+                        <p class="msj-form">*
+                            <% mensaje %>
+                        </p>
+                        <% } %>
                 </div>
                 <form method="POST" action="/user">
                     <div class="form-group">
@@ -14,10 +19,10 @@
                         <input type="text" class="form-control" name="apellidos" placeholder="&#128100;  Apellidos" required autofocus>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="telefono" placeholder="&#128222;  Telefono" required>
+                        <input type="number" class="form-control" name="telefono" placeholder="&#128222;  Telefono" required>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" name="cedula" placeholder="&#51067;  cedula" required>
+                        <input type="number" class="form-control" name="cedula" placeholder="&#51067;  cedula" required>
                     </div>
                     <div class="form-group">
                         <input type="email" class="form-control" name="email" placeholder="Correo electrónico de la UNAL">
@@ -28,7 +33,12 @@
                     <div class="form-group">
                         <input type="password" class="form-control" name="confirmpassword" placeholder="Confirm Password">
                     </div>
-
+                    <div class="radio">
+                        <label><input type="radio" value="2" name="idtipopersona" checked>Profesor</label>
+                    </div>
+                    <div class="radio">
+                        <label><input type="radio" value="1" name="idtipopersona">Estudiante</label>
+                    </div>
                     <button type="submit" class="btn btn-primary">Registrar</button>
                 </form>
             </div>

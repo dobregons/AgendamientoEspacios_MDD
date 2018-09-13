@@ -51,14 +51,7 @@ module.exports = {
     return _.omit(this, ['password'])
   },
   beforeCreate: function(user, cb){
-    //Validar que no exista persona
-    Persona.find({email:user.email}, function (err, persona) {
-      if (err || !persona) 
-          return cb("some error message");
-      if(persona.length>0)
-          return cb("Ya existe registrada una persona con el correo "+ persona.email);
-      return cb();
-    });
+    
     //Encriptar clave
     bcrypt.genSalt(10, function(err, salt){
       bcrypt.hash(user.password, salt, null, function(err, hash){
