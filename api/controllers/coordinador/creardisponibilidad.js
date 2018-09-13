@@ -69,7 +69,7 @@ module.exports = {
       //Logout
       return res.redirect('/');
 
-    return exits.success();
+    return exits.success(reservaCreada);
 
   }
 

@@ -8,6 +8,7 @@ module.exports = {
 
 
   inputs: {
+    idespacio: { type: "number" },
     nombre: { type: "string" },
     idtipoespacio: { type: "number" },
     descripcion: { type: "string" },
@@ -26,19 +27,23 @@ module.exports = {
     let res = this.res;
     if (req.user) {
       // logged in
-      var response = await Espacio.update({ nombre:inputs.nombre,
-                                            idtipoespacio: inputs.idtipoespacio,
-                                            descripcion: inputs.descripcion,
-                                            capacidad: inputs.capacidad,
-                                            numcomputadores: inputs.numcomputadores
-                                          }).catch(function (err) {
-                                            res.serverError(err);
-                                            return;
-                                          })
-      return exits.success();
+      var response = await Espacio.update({ id: inputs.idespacio })
+        .set({
+          nombre: inputs.nombre,
+          idtipoespacio: inputs.idtipoespacio,
+          descripcion: inputs.descripcion,
+          capacidad: inputs.capacidad,
+          numcomputadores: inputs.numcomputadores
+        }).catch(function (err) {
+          res.serverError(err);
+          return;
+        })
+      //Provisionalmente retorna al home
+      return res.redirect('/home');
+      //return exits.success();
     } else {
       // not logged in
       return res.redirect('/');
-    } 
+    }
   }
 };

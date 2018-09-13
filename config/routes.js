@@ -41,12 +41,15 @@ module.exports.routes = {
   'POST /olvidarcontrasena' : 'AuthController.forgotpassword',
   //Reserva Routes
   '/reserva' : 'ReservaController.reserva',
-  'POST /coordinador/creardisponibilidad': 'coordinado/creardisponibilidad',
+  'POST /coordinador/creardisponibilidad': 'coordinador/creardisponibilidad',
   //Espacio Routes
   '/crearespacio' : 'EspacioController.crearespacio',
-  'GET espacio//modificarespacio/:idespacio' :'EspacioController.modificarespacio',
+  '/administrarespacios' : 'EspacioController.administrarespacios',
+  
+  '/modificarespacio/:idespacio' :'EspacioController.modificarespacio',
   'POST /espacio': { action: 'coordinador/crearespacio' },
-  'POST espacio//modificarespacio': { action: 'coordinador/crearespacio' },
+  'POST /espacio/modificarespacio': { action: 'coordinador/modificarespacio' },
+  'POST /espacio/borrarespacio': { action: 'coordinador/borrarespacio' },
   //Email routes
   'POST /enviarcorreoreservarealizada': { action: 'clienteemail/enviarcorreoreservarealizada' },
   'POST /enviarcorreoreservacancelada': { action: 'clienteemail/enviarcorreoreservacancelada' },

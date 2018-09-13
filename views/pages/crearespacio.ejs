@@ -4,6 +4,12 @@
             <div class="panel">
                 <h2>Formulario <span>Registro Espacios</span></h2>
             </div>
+            <% if(typeof mensaje != 'undefined' && mensaje){ %>
+                <p class="msj-form">* <% mensaje %></p>
+            <% } %>
+            <div>
+
+            </div>
             <form method="POST" action="/espacio">
                 <div class="form-group">
                     <input class="form-control" name="nombre" type="text" placeholder="&#128100;  Nombre del espacio (ej: salón 119)" required autofocus>

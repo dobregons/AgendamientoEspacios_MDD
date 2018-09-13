@@ -8,7 +8,7 @@ module.exports = {
 
 
   inputs: {
-
+    idespacio: { type: "number" }
   },
 
 
@@ -17,8 +17,8 @@ module.exports = {
   },
 
 
-  fn: function (inputs, exits) {
-
+  fn: async function (inputs, exits) {
+    await Espacio.destroy({ id: inputs.idespacio});
     return exits.success();
 
   }

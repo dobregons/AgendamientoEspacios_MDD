@@ -28,18 +28,18 @@ module.exports = {
 
     if (req.user) {
       // logged in
-      
+
       var espacio = new Object();
       //espacio.fechaingreso = Date.now();
-      espacio.fechaingreso =  await sails.helpers.generatedate();
-      espacio.fechagreso =  await sails.helpers.generatedate();
+      espacio.fechaingreso = await sails.helpers.generatedate();
+      espacio.fechagreso = await sails.helpers.generatedate();
       espacio.idresponsable = req.user.id;
       espacio.idtipoespacio = inputs.idtipoespacio;
       espacio.nombre = inputs.nombre;
       espacio.descripcion = inputs.descripcion;
       espacio.capacidad = inputs.capacidad;
       espacio.numcomputadores = espacio.numcomputadores;
-     
+
 
       var espacioCreado = await Espacio
         .create(espacio).fetch()
@@ -62,11 +62,12 @@ module.exports = {
 
       sails.log('Espacio creado\'s id :', espacioCreado.id);
       //return res.json(createdUser);
-      return exits.success();
+      return res.redirect("/home");
+      //return exit.ssuccess();
     } else {
       // not logged in
       return res.redirect('/');
-    }    
+    }
   }
 
 

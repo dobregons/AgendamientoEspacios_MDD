@@ -147,11 +147,11 @@ $(document).ready(function () {
     defaultDate: new Date(),
     defaultView: 'agendaDay',
     events: [
-      {
-        title: 'event3',
-        start: '2018-09-10T12:30:00',
-        allDay: false // will make the time show
-      }
+      // {
+      //   title: 'event3',
+      //   start: '2018-09-10T12:30:00',
+      //   allDay: false // will make the time show
+      // }
       // etc...
     ],
     color: 'yellow',   // an option!
@@ -164,22 +164,30 @@ $(document).ready(function () {
       var agregar = true;
       //Validar que la disponibilidad no se solape con una existente
       if ($('#calendar').fullCalendar('clientEvents').length > 0) {
-        $('#calendar').fullCalendar('clientEvents').forEach(function (element) {
+        try {
+          $('#calendar').fullCalendar('clientEvents').forEach(function (element) {
 
-          var dStartClickable = new Date(momentStart);
-          var dEndClickable = new Date(momentEnd);
-          var dStart = new Date(moment(element.start).format());
-          var dEnd = new Date(moment(element.end).format());
-          //Comparación que no se solapen
-          if (((dStartClickable < dStart && dEndClickable < dStart) || (dStartClickable > dEnd)) && agregar) {
+            var dStartClickable = new Date(momentStart);
+            var dEndClickable = new Date(momentEnd);
+            var dStart = new Date(moment(element.start).format());
+            var dEnd = new Date(moment(element.end).format());
+
+            //Comparación que no se solapen
+            if (((dStartClickable <= dStart && dEndClickable <= dStart) || (dStartClickable >= dEnd))) {
+              //agregarFechaCalendarioPersistida(momentStart, momentEnd);
+              
+            } else {
+              //No válido
+              alert("La fecha seleccionada se cruza con una disponibilidad existente");
+              //agregar = false;
+              throw BreakException;
+            }
+          });
+          if(agregar)
             agregarFechaCalendarioPersistida(momentStart, momentEnd);
-
-          } else {
-            //No válido
-            alert("La fecha seleccionada se cruza con una disponibilidad existente");
-            agregar = false;
-          }
-        });
+        } catch (e) {
+          if (e !== BreakException) throw e;
+        }
       } else {
         agregarFechaCalendarioPersistida(momentStart, momentEnd);
       }
@@ -190,7 +198,33 @@ $(document).ready(function () {
     }
     // an option!
   })
-
+  //Acciones que se ejecutan cuando se da click en el botón modificar espacio
+  $("#btn-mod-espacio").click(function () {
+    var idespacio = $("#combobox").val();
+    if (idespacio.trim() == "") {
+      alert("Debes seleccionar un espacio");
+    } else {
+      window.location.href = "/modificarespacio/" + idespacio;
+    }
+  });
+  //Acciones que se ejecutan cuando se da click en el botón borrar espacio
+  $("#btn-del-espacio").click(function () {
+    var idespacio = $("#combobox").val();
+    if (idespacio.trim() == "") {
+      alert("Debes seleccionar un espacio");
+    } else {
+      $.post("coordinador/borrarespacio", {
+        idespacio: idespacio,
+      }, function (data) {
+        alert("Se ha borrado el espacio!");
+        location.reload(true);
+      })
+        .fail(function () {
+          alert("Error consultando el servicio");
+        });
+    }
+  });
+  //Acciones que se ejecutan cuando se da click en el  botón consultar
   $("#btn-cons-reserva").click(function () {
     //Borrar eventos actuales del calendario
     $('#calendar').fullCalendar('removeEvents');
@@ -259,7 +293,7 @@ function agregarFechaCalendarioPersistida(momentStart, momentEnd) {
 
     alert("success");
   })
-    .fail(function () {
+    .fail(function (err) {
       alert("Error consultando el servicio");
     });
 }

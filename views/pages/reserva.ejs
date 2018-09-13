@@ -2,8 +2,10 @@
   <div class="container">
     <div class="row">
       <div class="ui-widget input-group form-group">
-        <label for="combobox">Espacio:</label><br/>
-        <select class="form-control" id="combobox" data-style="btn-info" name="idtipoespacio">
+        <div class="input-group-sm">
+            <span class="input-group-text">Espacio</span>
+          </div>
+        <select class="form-control" id="combobox" data-style="btn-info" name="idespacio">
           <option value=""></option>
           <% espacios.forEach(function(row){ %>
             <option value="<%= row.id %>">
@@ -15,6 +17,7 @@
           <button class="btn btn-primary" id="btn-cons-reserva" type="button">Consultar</button>
         </span>
       </div>
+      <p>Para reservar solo lo puedes hacer en las zonas disponibles, es decir las zonas azules.</p>
     </div>
   </div>
   <div class="container">

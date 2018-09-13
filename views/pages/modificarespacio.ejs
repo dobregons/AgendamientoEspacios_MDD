@@ -4,7 +4,8 @@
             <div class="panel">
                 <h2>Formulario <span>Actualización Espacios</span></h2>
             </div>
-            <form method="POST" action="/espacio//modificarespacio">
+            <form method="POST" action="/espacio/modificarespacio">
+                <input class="form-control" hidden name="idespacio" type="number" value="<%= espacio.id %>" >
                 <div class="form-group">
                     <input class="form-control" name="nombre" type="text" value='<%= espacio.nombre %>'" required autofocus>
                 </div>

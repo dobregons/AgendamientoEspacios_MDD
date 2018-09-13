@@ -1,0 +1,43 @@
+<div class="MainForm">
+        <div class="container">
+          <div class="row">
+            <div class="ui-widget input-group form-group">
+              <div class="input-group-sm">
+                  <span class="input-group-text">Espacio</span>
+                </div>
+              <select class="form-control" id="combobox" data-style="btn-info" name="idespacio">
+                <option value=""></option>
+                <% espacios.forEach(function(row){ %>
+                  <option value="<%= row.id %>">
+                    <%= row.nombre.trim() %>
+                  </option>
+                  <% }) %>
+              </select>
+              <span class="input-group-btn">
+                <button class="btn btn-primary" id="btn-cons-reserva" type="button">Consultar</button>
+              </span>
+              <span class="input-group-btn">
+                <button class="btn btn-dark" id="btn-mod-espacio" type="button">Modificar Espacio</button>
+              </span>
+              <span class="input-group-btn">
+                <button class="btn btn-danger" id="btn-del-espacio" type="button">Borrar Espacio</button>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-10">
+                <div id='calendar'></div>
+            </div>
+            <div class="col-md-2">
+                <ul class="legend-ul">
+                  <li class="legend-li blue">Disponible</li>
+                  <li class="legend-li red">Reservado</li>
+                  <li class="legend-li yellow">Cambio Solicitado</li>
+                </ul>
+            </div>
+            
+          </div>
+        </div>
+      </div>
