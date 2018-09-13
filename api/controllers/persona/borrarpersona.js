@@ -8,7 +8,7 @@ module.exports = {
 
 
   inputs: {
-
+    idpersona: { type: "string" }
   },
 
 
@@ -19,6 +19,7 @@ module.exports = {
 
   fn: function (inputs, exits) {
 
+    await Persona.destroy({ id: inputs.idpersona });
     return exits.success();
 
   }
