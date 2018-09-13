@@ -1,0 +1,987 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.2.13
+-- Dumped by pg_dump version 9.2.13
+-- Started on 2018-09-13 17:38:42
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- TOC entry 1996 (class 1262 OID 26998)
+-- Dependencies: 1995
+-- Name: MDD_Proyecto; Type: COMMENT; Schema: -; Owner: postgres
+--
+
+COMMENT ON DATABASE "MDD_Proyecto" IS 'Base de datos para el proyecto de agendamiento de espacios de la universidad nacional correspondiente a la asignatura DEsarrollo de software dirigido por modelos
+';
+
+
+--
+-- TOC entry 181 (class 3079 OID 11727)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 1999 (class 0 OID 0)
+-- Dependencies: 181
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 175 (class 1259 OID 27160)
+-- Name: espacio; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE espacio (
+    id integer NOT NULL,
+    idtipoespacio integer NOT NULL,
+    idresponsable integer NOT NULL,
+    nombre character varying(50) NOT NULL,
+    descripcion character varying(100),
+    fechaingreso timestamp without time zone NOT NULL,
+    fechaegreso timestamp without time zone,
+    capacidad integer,
+    numcomputadores integer
+);
+
+
+ALTER TABLE public.espacio OWNER TO postgres;
+
+--
+-- TOC entry 2000 (class 0 OID 0)
+-- Dependencies: 175
+-- Name: TABLE espacio; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON TABLE espacio IS 'Tabla que almacena la información relacionada con los espacios de la facultad de ingeniería de la UNAL.';
+
+
+--
+-- TOC entry 2001 (class 0 OID 0)
+-- Dependencies: 175
+-- Name: COLUMN espacio.idtipoespacio; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN espacio.idtipoespacio IS 'Llave foránea para la información relacionada con el tipo de espacio';
+
+
+--
+-- TOC entry 2002 (class 0 OID 0)
+-- Dependencies: 175
+-- Name: COLUMN espacio.idresponsable; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN espacio.idresponsable IS 'Responsable o encargado del espacio';
+
+
+--
+-- TOC entry 2003 (class 0 OID 0)
+-- Dependencies: 175
+-- Name: COLUMN espacio.nombre; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN espacio.nombre IS 'Nombre del espacio, se limita a 50 carácteres para que sea un nombre corto';
+
+
+--
+-- TOC entry 2004 (class 0 OID 0)
+-- Dependencies: 175
+-- Name: COLUMN espacio.descripcion; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN espacio.descripcion IS 'Descripción del espacio o del funcionamiento del mismo.';
+
+
+--
+-- TOC entry 2005 (class 0 OID 0)
+-- Dependencies: 175
+-- Name: COLUMN espacio.fechaingreso; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN espacio.fechaingreso IS 'Fecha de ingreso del espacio en el sistema';
+
+
+--
+-- TOC entry 2006 (class 0 OID 0)
+-- Dependencies: 175
+-- Name: COLUMN espacio.fechaegreso; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN espacio.fechaegreso IS 'Fecha de egreso del espacio en el sistema';
+
+
+--
+-- TOC entry 2007 (class 0 OID 0)
+-- Dependencies: 175
+-- Name: COLUMN espacio.capacidad; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN espacio.capacidad IS 'Capacidad en # de personas con el que cuenta el espacio';
+
+
+--
+-- TOC entry 2008 (class 0 OID 0)
+-- Dependencies: 175
+-- Name: COLUMN espacio.numcomputadores; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN espacio.numcomputadores IS 'Número de computadores con los que cuenta el espacio';
+
+
+--
+-- TOC entry 174 (class 1259 OID 27158)
+-- Name: espacio_idespacio_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE espacio_idespacio_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.espacio_idespacio_seq OWNER TO postgres;
+
+--
+-- TOC entry 2009 (class 0 OID 0)
+-- Dependencies: 174
+-- Name: espacio_idespacio_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE espacio_idespacio_seq OWNED BY espacio.id;
+
+
+--
+-- TOC entry 178 (class 1259 OID 27278)
+-- Name: estadoreserva; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE estadoreserva (
+    id integer NOT NULL,
+    descripcion character varying(100)
+);
+
+
+ALTER TABLE public.estadoreserva OWNER TO postgres;
+
+--
+-- TOC entry 2010 (class 0 OID 0)
+-- Dependencies: 178
+-- Name: TABLE estadoreserva; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON TABLE estadoreserva IS 'Tabla para almacenar los estados de la reserva. Ej: Disponible, Reservado, CambioSolicitado, Cancelado';
+
+
+--
+-- TOC entry 2011 (class 0 OID 0)
+-- Dependencies: 178
+-- Name: COLUMN estadoreserva.id; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN estadoreserva.id IS 'Llave primaria de la tabla Estado';
+
+
+--
+-- TOC entry 2012 (class 0 OID 0)
+-- Dependencies: 178
+-- Name: COLUMN estadoreserva.descripcion; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN estadoreserva.descripcion IS 'Descripción del estado';
+
+
+--
+-- TOC entry 177 (class 1259 OID 27168)
+-- Name: persona; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE persona (
+    id integer NOT NULL,
+    idtipopersona integer NOT NULL,
+    nombres character varying(100) NOT NULL,
+    apellidos character varying(100) NOT NULL,
+    email character varying(100),
+    cedula character varying(20),
+    dedicacion integer,
+    password character varying(500) NOT NULL
+);
+
+
+ALTER TABLE public.persona OWNER TO postgres;
+
+--
+-- TOC entry 2013 (class 0 OID 0)
+-- Dependencies: 177
+-- Name: TABLE persona; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON TABLE persona IS 'Tabla encargada de almacenar los datos de los miembros de la facultad de ingeniería de la UNAL';
+
+
+--
+-- TOC entry 2014 (class 0 OID 0)
+-- Dependencies: 177
+-- Name: COLUMN persona.id; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN persona.id IS 'Llave primaria de la tabla Persona';
+
+
+--
+-- TOC entry 2015 (class 0 OID 0)
+-- Dependencies: 177
+-- Name: COLUMN persona.idtipopersona; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN persona.idtipopersona IS 'Llave foránea para almacenar la información del tipo de persona';
+
+
+--
+-- TOC entry 2016 (class 0 OID 0)
+-- Dependencies: 177
+-- Name: COLUMN persona.nombres; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN persona.nombres IS 'Nombres de la persona';
+
+
+--
+-- TOC entry 2017 (class 0 OID 0)
+-- Dependencies: 177
+-- Name: COLUMN persona.apellidos; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN persona.apellidos IS 'Apellidos de la persona';
+
+
+--
+-- TOC entry 2018 (class 0 OID 0)
+-- Dependencies: 177
+-- Name: COLUMN persona.email; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN persona.email IS 'Correo electrónico de la persona';
+
+
+--
+-- TOC entry 176 (class 1259 OID 27166)
+-- Name: persona_idpersona_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE persona_idpersona_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.persona_idpersona_seq OWNER TO postgres;
+
+--
+-- TOC entry 2019 (class 0 OID 0)
+-- Dependencies: 176
+-- Name: persona_idpersona_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE persona_idpersona_seq OWNED BY persona.id;
+
+
+--
+-- TOC entry 180 (class 1259 OID 27321)
+-- Name: reserva; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE reserva (
+    id integer NOT NULL,
+    idespacio integer NOT NULL,
+    idtipoactividad integer NOT NULL,
+    idpersona integer NOT NULL,
+    idestado integer NOT NULL,
+    fechainicio timestamp without time zone NOT NULL,
+    fechafin timestamp without time zone NOT NULL,
+    detalle character varying(250)
+);
+
+
+ALTER TABLE public.reserva OWNER TO postgres;
+
+--
+-- TOC entry 2020 (class 0 OID 0)
+-- Dependencies: 180
+-- Name: TABLE reserva; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON TABLE reserva IS 'Tabla encargada de almacenar toda la información de las reservas de los espacios.';
+
+
+--
+-- TOC entry 2021 (class 0 OID 0)
+-- Dependencies: 180
+-- Name: COLUMN reserva.id; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN reserva.id IS 'Llave primaria de la tabla Reserva';
+
+
+--
+-- TOC entry 2022 (class 0 OID 0)
+-- Dependencies: 180
+-- Name: COLUMN reserva.idespacio; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN reserva.idespacio IS 'Almacena la información del espacio que se está reservando';
+
+
+--
+-- TOC entry 2023 (class 0 OID 0)
+-- Dependencies: 180
+-- Name: COLUMN reserva.idtipoactividad; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN reserva.idtipoactividad IS 'Almacena la información del tipo de actividad para el cual se está realizando la reserva';
+
+
+--
+-- TOC entry 2024 (class 0 OID 0)
+-- Dependencies: 180
+-- Name: COLUMN reserva.idpersona; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN reserva.idpersona IS 'Almacena información de la persona que está realizando la reserva del espacio';
+
+
+--
+-- TOC entry 2025 (class 0 OID 0)
+-- Dependencies: 180
+-- Name: COLUMN reserva.idestado; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN reserva.idestado IS 'Almacena información del estado de la reserva';
+
+
+--
+-- TOC entry 2026 (class 0 OID 0)
+-- Dependencies: 180
+-- Name: COLUMN reserva.fechainicio; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN reserva.fechainicio IS 'Fecha inicial de la reserva';
+
+
+--
+-- TOC entry 2027 (class 0 OID 0)
+-- Dependencies: 180
+-- Name: COLUMN reserva.fechafin; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN reserva.fechafin IS 'fecha hasta cuando se va a realizar la reserva';
+
+
+--
+-- TOC entry 2028 (class 0 OID 0)
+-- Dependencies: 180
+-- Name: COLUMN reserva.detalle; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN reserva.detalle IS 'Información adicional de la reserva';
+
+
+--
+-- TOC entry 179 (class 1259 OID 27319)
+-- Name: reserva_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE reserva_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.reserva_id_seq OWNER TO postgres;
+
+--
+-- TOC entry 2029 (class 0 OID 0)
+-- Dependencies: 179
+-- Name: reserva_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE reserva_id_seq OWNED BY reserva.id;
+
+
+--
+-- TOC entry 169 (class 1259 OID 27136)
+-- Name: tipoactividad; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE tipoactividad (
+    id integer NOT NULL,
+    descripcion character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.tipoactividad OWNER TO postgres;
+
+--
+-- TOC entry 2030 (class 0 OID 0)
+-- Dependencies: 169
+-- Name: TABLE tipoactividad; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON TABLE tipoactividad IS 'Tabla encargada de almacenar el tipo de actividad para reservar el espacio. ej:Clase, conferencia, grupo de estudio etc.';
+
+
+--
+-- TOC entry 2031 (class 0 OID 0)
+-- Dependencies: 169
+-- Name: COLUMN tipoactividad.id; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN tipoactividad.id IS 'Llave primaria de la tabla TipoActividad';
+
+
+--
+-- TOC entry 2032 (class 0 OID 0)
+-- Dependencies: 169
+-- Name: COLUMN tipoactividad.descripcion; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN tipoactividad.descripcion IS 'Descripción del tipo de actividad';
+
+
+--
+-- TOC entry 168 (class 1259 OID 27134)
+-- Name: tipoactividad_idtipoactividad_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE tipoactividad_idtipoactividad_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.tipoactividad_idtipoactividad_seq OWNER TO postgres;
+
+--
+-- TOC entry 2033 (class 0 OID 0)
+-- Dependencies: 168
+-- Name: tipoactividad_idtipoactividad_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE tipoactividad_idtipoactividad_seq OWNED BY tipoactividad.id;
+
+
+--
+-- TOC entry 171 (class 1259 OID 27144)
+-- Name: tipoespacio; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE tipoespacio (
+    id integer NOT NULL,
+    codigo character varying(50),
+    descripcion character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.tipoespacio OWNER TO postgres;
+
+--
+-- TOC entry 2034 (class 0 OID 0)
+-- Dependencies: 171
+-- Name: TABLE tipoespacio; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON TABLE tipoespacio IS 'Tabla encargada de almacenar el tipo de espacio a reservar, ej: salon, laboratorio, etc.';
+
+
+--
+-- TOC entry 2035 (class 0 OID 0)
+-- Dependencies: 171
+-- Name: COLUMN tipoespacio.id; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN tipoespacio.id IS 'Llave primaria de la tabla TipoEspacio';
+
+
+--
+-- TOC entry 2036 (class 0 OID 0)
+-- Dependencies: 171
+-- Name: COLUMN tipoespacio.codigo; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN tipoespacio.codigo IS 'Codigo del espacio, por ejemplo si es una clase el codigo de la clase';
+
+
+--
+-- TOC entry 2037 (class 0 OID 0)
+-- Dependencies: 171
+-- Name: COLUMN tipoespacio.descripcion; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN tipoespacio.descripcion IS 'Descripción del tipo de espacio';
+
+
+--
+-- TOC entry 170 (class 1259 OID 27142)
+-- Name: tipoespacio_idtipoespacio_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE tipoespacio_idtipoespacio_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.tipoespacio_idtipoespacio_seq OWNER TO postgres;
+
+--
+-- TOC entry 2038 (class 0 OID 0)
+-- Dependencies: 170
+-- Name: tipoespacio_idtipoespacio_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE tipoespacio_idtipoespacio_seq OWNED BY tipoespacio.id;
+
+
+--
+-- TOC entry 173 (class 1259 OID 27152)
+-- Name: tipopersona; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE tipopersona (
+    id integer NOT NULL,
+    descripcion character varying(100) NOT NULL
+);
+
+
+ALTER TABLE public.tipopersona OWNER TO postgres;
+
+--
+-- TOC entry 2039 (class 0 OID 0)
+-- Dependencies: 173
+-- Name: TABLE tipopersona; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON TABLE tipopersona IS 'Tipo de persona que interactua con el software, ej: profesor, estudiante, coordinador etc.';
+
+
+--
+-- TOC entry 2040 (class 0 OID 0)
+-- Dependencies: 173
+-- Name: COLUMN tipopersona.id; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN tipopersona.id IS 'Llave primaria de la tabla TipoPersona';
+
+
+--
+-- TOC entry 2041 (class 0 OID 0)
+-- Dependencies: 173
+-- Name: COLUMN tipopersona.descripcion; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN tipopersona.descripcion IS 'Descripcion del tipo de persona';
+
+
+--
+-- TOC entry 172 (class 1259 OID 27150)
+-- Name: tipopersona_idtipopersona_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE tipopersona_idtipopersona_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.tipopersona_idtipopersona_seq OWNER TO postgres;
+
+--
+-- TOC entry 2042 (class 0 OID 0)
+-- Dependencies: 172
+-- Name: tipopersona_idtipopersona_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE tipopersona_idtipopersona_seq OWNED BY tipopersona.id;
+
+
+--
+-- TOC entry 1848 (class 2604 OID 27163)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY espacio ALTER COLUMN id SET DEFAULT nextval('espacio_idespacio_seq'::regclass);
+
+
+--
+-- TOC entry 1849 (class 2604 OID 27171)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY persona ALTER COLUMN id SET DEFAULT nextval('persona_idpersona_seq'::regclass);
+
+
+--
+-- TOC entry 1850 (class 2604 OID 27324)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY reserva ALTER COLUMN id SET DEFAULT nextval('reserva_id_seq'::regclass);
+
+
+--
+-- TOC entry 1845 (class 2604 OID 27139)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tipoactividad ALTER COLUMN id SET DEFAULT nextval('tipoactividad_idtipoactividad_seq'::regclass);
+
+
+--
+-- TOC entry 1846 (class 2604 OID 27147)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tipoespacio ALTER COLUMN id SET DEFAULT nextval('tipoespacio_idtipoespacio_seq'::regclass);
+
+
+--
+-- TOC entry 1847 (class 2604 OID 27155)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tipopersona ALTER COLUMN id SET DEFAULT nextval('tipopersona_idtipopersona_seq'::regclass);
+
+
+--
+-- TOC entry 1985 (class 0 OID 27160)
+-- Dependencies: 175
+-- Data for Name: espacio; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY espacio (id, idtipoespacio, idresponsable, nombre, descripcion, fechaingreso, fechaegreso, capacidad, numcomputadores) FROM stdin;
+2	1	14	salón 119	asas	2018-09-09 00:00:00	\N	25	0
+5	2	14	Salón 2	salón de prueba	2018-09-12 21:12:12	\N	25	0
+7	2	14	salón 120	laboratorio de sistemas	2018-09-12 21:20:11	\N	25	0
+1	1	14	Salón de clase #2	dfgh	2018-09-09 00:00:00	2018-09-09 11:00:00	2	0
+\.
+
+
+--
+-- TOC entry 2043 (class 0 OID 0)
+-- Dependencies: 174
+-- Name: espacio_idespacio_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('espacio_idespacio_seq', 7, true);
+
+
+--
+-- TOC entry 1988 (class 0 OID 27278)
+-- Dependencies: 178
+-- Data for Name: estadoreserva; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY estadoreserva (id, descripcion) FROM stdin;
+1	Disponible
+2	Reservado
+3	Cambio Solicitado
+4	Cancelado
+\.
+
+
+--
+-- TOC entry 1987 (class 0 OID 27168)
+-- Dependencies: 177
+-- Data for Name: persona; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY persona (id, idtipopersona, nombres, apellidos, email, cedula, dedicacion, password) FROM stdin;
+1	1	dada	daaa	nano_276@hotmail.com	1016046175	0	$2a$10$13huCGukUtVVakZc2d0CteLdL67zREQbbFMtFAPMBVi7iY41h/w5e
+14	3	david	Obregon	nano27666@gmail.com	1016046175	0	$2a$10$Rr3z/mbp/9WbPINTl21rieRHbPmG7qQ4sCarnafYrZFNKb8wHynqC
+32	2	aaa	aaa	profe@unal.edu.co	111	0	$2a$10$tXGEJF1CqN0SuIlO.1qUMe7QzXzHUtGgJeXSMeAtgtvhQe6rB8ubO
+33	1	aaa	aaa	estud@unal.edu.co	12121	0	$2a$10$xov.uGfZ0vMjEwsfM01mNOdwWN4jSAevJvl6P4rZHTjEmDzd2OuB.
+34	1	DAvid	Obregon	dobregon@unal.edu.co	1231232222	0	$2a$10$nJkk2wNCKUmv4yuJcZbWcOS12by59QjYSNsZm/DIocGF7h1vhCubG
+\.
+
+
+--
+-- TOC entry 2044 (class 0 OID 0)
+-- Dependencies: 176
+-- Name: persona_idpersona_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('persona_idpersona_seq', 34, true);
+
+
+--
+-- TOC entry 1990 (class 0 OID 27321)
+-- Dependencies: 180
+-- Data for Name: reserva; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY reserva (id, idespacio, idtipoactividad, idpersona, idestado, fechainicio, fechafin, detalle) FROM stdin;
+7	1	2	14	2	2018-09-11 21:00:00	2018-09-11 22:00:00	Reserva de espacio
+3	1	1	1	1	2018-09-11 20:00:00	2018-09-11 22:00:00	Disponibilidad creada
+9	2	1	14	1	2018-09-12 06:00:00	2018-09-12 08:30:00	detalle 1
+10	2	1	14	1	2018-09-12 04:00:00	2018-09-12 05:30:00	
+11	2	1	14	1	2018-09-12 08:30:00	2018-09-12 10:00:00	prueba
+12	2	1	14	1	2018-09-12 10:00:00	2018-09-12 11:30:00	aaaaa
+13	2	1	14	1	2018-09-12 10:00:00	2018-09-12 11:30:00	
+14	2	1	14	1	2018-09-12 10:00:00	2018-09-12 11:30:00	
+15	2	1	14	1	2018-09-12 02:30:00	2018-09-12 04:00:00	aaaa
+16	2	1	14	1	2018-09-12 00:00:00	2018-09-12 02:00:00	
+17	2	1	14	1	2018-09-12 11:30:00	2018-09-12 14:00:00	pruuu
+18	2	1	14	1	2018-09-12 14:00:00	2018-09-12 15:30:00	test
+19	2	1	14	1	2018-09-12 15:30:00	2018-09-12 18:00:00	aa
+20	2	1	14	1	2018-09-13 08:30:00	2018-09-13 11:30:00	prueba
+23	2	3	14	2	2018-09-13 09:00:00	2018-09-13 10:30:00	sasasasasasas
+\.
+
+
+--
+-- TOC entry 2045 (class 0 OID 0)
+-- Dependencies: 179
+-- Name: reserva_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('reserva_id_seq', 25, true);
+
+
+--
+-- TOC entry 1979 (class 0 OID 27136)
+-- Dependencies: 169
+-- Data for Name: tipoactividad; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY tipoactividad (id, descripcion) FROM stdin;
+1	Clase
+2	Conferencia
+3	Grupo de Estudio
+\.
+
+
+--
+-- TOC entry 2046 (class 0 OID 0)
+-- Dependencies: 168
+-- Name: tipoactividad_idtipoactividad_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('tipoactividad_idtipoactividad_seq', 3, true);
+
+
+--
+-- TOC entry 1981 (class 0 OID 27144)
+-- Dependencies: 171
+-- Data for Name: tipoespacio; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY tipoespacio (id, codigo, descripcion) FROM stdin;
+1	SAL	Salón de clases
+2	LAB	Laboratorio de sistemas
+\.
+
+
+--
+-- TOC entry 2047 (class 0 OID 0)
+-- Dependencies: 170
+-- Name: tipoespacio_idtipoespacio_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('tipoespacio_idtipoespacio_seq', 2, true);
+
+
+--
+-- TOC entry 1983 (class 0 OID 27152)
+-- Dependencies: 173
+-- Data for Name: tipopersona; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY tipopersona (id, descripcion) FROM stdin;
+1	Estudiante
+2	Profesor
+3	Coordinador
+\.
+
+
+--
+-- TOC entry 2048 (class 0 OID 0)
+-- Dependencies: 172
+-- Name: tipopersona_idtipopersona_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('tipopersona_idtipopersona_seq', 1, false);
+
+
+--
+-- TOC entry 1858 (class 2606 OID 27165)
+-- Name: espacio_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY espacio
+    ADD CONSTRAINT espacio_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1862 (class 2606 OID 27282)
+-- Name: estadoreserva_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY estadoreserva
+    ADD CONSTRAINT estadoreserva_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1860 (class 2606 OID 27173)
+-- Name: persona_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY persona
+    ADD CONSTRAINT persona_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1864 (class 2606 OID 27326)
+-- Name: reserva_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY reserva
+    ADD CONSTRAINT reserva_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1852 (class 2606 OID 27141)
+-- Name: tipoactividad_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY tipoactividad
+    ADD CONSTRAINT tipoactividad_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1854 (class 2606 OID 27149)
+-- Name: tipoespacio_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY tipoespacio
+    ADD CONSTRAINT tipoespacio_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1856 (class 2606 OID 27157)
+-- Name: tipopersona_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY tipopersona
+    ADD CONSTRAINT tipopersona_pkey PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1868 (class 2606 OID 27327)
+-- Name: fk_reserva_estadoreserva; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY reserva
+    ADD CONSTRAINT fk_reserva_estadoreserva FOREIGN KEY (idestado) REFERENCES estadoreserva(id);
+
+
+--
+-- TOC entry 1866 (class 2606 OID 27203)
+-- Name: fkespacio_persona; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY espacio
+    ADD CONSTRAINT fkespacio_persona FOREIGN KEY (idresponsable) REFERENCES persona(id);
+
+
+--
+-- TOC entry 1865 (class 2606 OID 27193)
+-- Name: fkespacio_tipoespacio; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY espacio
+    ADD CONSTRAINT fkespacio_tipoespacio FOREIGN KEY (idtipoespacio) REFERENCES tipoespacio(id);
+
+
+--
+-- TOC entry 1867 (class 2606 OID 27198)
+-- Name: fkpersona_tipopersona; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY persona
+    ADD CONSTRAINT fkpersona_tipopersona FOREIGN KEY (idtipopersona) REFERENCES tipopersona(id);
+
+
+--
+-- TOC entry 1869 (class 2606 OID 27332)
+-- Name: fkreserva_espacio; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY reserva
+    ADD CONSTRAINT fkreserva_espacio FOREIGN KEY (idespacio) REFERENCES espacio(id);
+
+
+--
+-- TOC entry 1870 (class 2606 OID 27337)
+-- Name: fkreserva_persona; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY reserva
+    ADD CONSTRAINT fkreserva_persona FOREIGN KEY (idpersona) REFERENCES persona(id);
+
+
+--
+-- TOC entry 1871 (class 2606 OID 27342)
+-- Name: fkreserva_tipoactividad; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY reserva
+    ADD CONSTRAINT fkreserva_tipoactividad FOREIGN KEY (idtipoactividad) REFERENCES tipoactividad(id);
+
+
+--
+-- TOC entry 1998 (class 0 OID 0)
+-- Dependencies: 5
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+-- Completed on 2018-09-13 17:38:46
+
+--
+-- PostgreSQL database dump complete
+--
+
