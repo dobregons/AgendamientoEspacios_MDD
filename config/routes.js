@@ -42,6 +42,8 @@ module.exports.routes = {
   //Reserva Routes
   '/reserva' : 'ReservaController.reserva',
   'POST /coordinador/creardisponibilidad': 'coordinador/creardisponibilidad',
+  'POST /persona/reservarespacio': 'persona/reservarespacio',
+  
   //Espacio Routes
   '/crearespacio' : 'EspacioController.crearespacio',
   '/administrarespacios' : 'EspacioController.administrarespacios',

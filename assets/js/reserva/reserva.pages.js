@@ -184,12 +184,12 @@ $(document).ready(function () {
             }
           });
           if(agregar)
-            agregarFechaCalendarioPersistida(momentStart, momentEnd);
+            agregarFechaCalendarioPersistida(momentStart, momentEnd, EventType.Disponible);
         } catch (e) {
           if (e !== BreakException) throw e;
         }
       } else {
-        agregarFechaCalendarioPersistida(momentStart, momentEnd);
+        agregarFechaCalendarioPersistida(momentStart, momentEnd, EventType.Disponible);
       }
 
 
@@ -197,6 +197,52 @@ $(document).ready(function () {
 
     }
     // an option!
+  });
+
+  $('#calendar_reserva').fullCalendar({
+    defaultDate: new Date(),
+    defaultView: 'agendaDay',
+    events: [
+
+    ],
+    color: 'yellow',   // an option!
+    textColor: 'black',
+    selectable: true,
+    select: function (start, end, event, view) {
+      //Función para agregar eventos al calendario cuando se arrastra el mouse
+      var momentStart = moment(start).format();
+      var momentEnd = moment(end).format();
+      var agregar = true;
+      //Validar que la reserva que se va a realizar este en el límite de las disponibilidades
+      if ($('#calendar').fullCalendar('clientEvents').length > 0) {
+        try {
+          $('#calendar').fullCalendar('clientEvents').forEach(function (element) {
+
+            var dStartClickable = new Date(momentStart);
+            var dEndClickable = new Date(momentEnd);
+            var dStart = new Date(moment(element.start).format());
+            var dEnd = new Date(moment(element.end).format());
+
+            //Comparación que no se solapen
+            if (((dStartClickable <= dStart && dEndClickable <= dStart) || (dStartClickable >= dEnd))) {
+              //agregarFechaCalendarioPersistida(momentStart, momentEnd);
+              
+            } else {
+              //No válido
+              alert("La fecha seleccionada se cruza con una disponibilidad existente");
+              //agregar = false;
+              throw BreakException;
+            }
+          });
+          if(agregar)
+            agregarFechaCalendarioPersistida(momentStart, momentEnd, EventType.Reserva);
+        } catch (e) {
+          if (e !== BreakException) throw e;
+        }
+      } else {
+        agregarFechaCalendarioPersistida(momentStart, momentEnd, EventType.Reserva);
+      }
+    }
   })
   //Acciones que se ejecutan cuando se da click en el botón modificar espacio
   $("#btn-mod-espacio").click(function () {
@@ -279,7 +325,7 @@ function addEventCalendar(id, title, start, end, tipoEvento) {
 //Borrar evento del calendario por ID
 //$('#calendar').fullCalendar('removeEvents', 7);
 
-function agregarFechaCalendarioPersistida(momentStart, momentEnd) {
+function agregarFechaCalendarioPersistida(momentStart, momentEnd, tipoEvento) {
   //Válido
   //Enviar información al controlador
   var detalle = prompt('Ingresa el detalle de la reserva');
@@ -289,7 +335,7 @@ function agregarFechaCalendarioPersistida(momentStart, momentEnd) {
     fechafin: momentEnd,
     detalle: detalle
   }, function (data) {
-    addEventCalendar(data.id, data.title, momentStart, momentEnd, 1)
+    addEventCalendar(data.id, data.title, momentStart, momentEnd, tipoEvento)
 
     alert("success");
   })
