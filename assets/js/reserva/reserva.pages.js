@@ -157,6 +157,26 @@ $(document).ready(function () {
     color: 'yellow',   // an option!
     textColor: 'black',
     selectable: true,
+    eventRender: function (event, element, view) {
+      if (view.name == 'listDay') {
+        element.find(".fc-list-item-time").append("<span class='closeon'>X</span>");
+      } else {
+        element.find(".fc-content").prepend("<span class='closeon'>X</span>");
+      }
+      element.find(".closeon").on('click', function () {
+        $.post("reserva/borrarreserva", {
+          idreserva: event.id,
+        }, function (data) {
+          alert(data);
+        })
+          .fail(function (err) {
+            alert(err);
+          });
+        $('#calendar').fullCalendar('removeEvents', event._id);
+
+        console.log('delete');
+      });
+    },
     select: function (start, end, event, view) {
       //Función para agregar eventos al calendario cuando se arrastra el mouse
       var momentStart = moment(start).format();
@@ -175,7 +195,7 @@ $(document).ready(function () {
             //Comparación que no se solapen
             if (((dStartClickable <= dStart && dEndClickable <= dStart) || (dStartClickable >= dEnd))) {
               //agregarFechaCalendarioPersistida(momentStart, momentEnd);
-              
+
             } else {
               //No válido
               alert("La fecha seleccionada se cruza con una disponibilidad existente");
@@ -183,7 +203,7 @@ $(document).ready(function () {
               throw BreakException;
             }
           });
-          if(agregar)
+          if (agregar)
             agregarFechaCalendarioPersistida(momentStart, momentEnd, EventType.Disponible);
         } catch (e) {
           if (e !== BreakException) throw e;
@@ -208,34 +228,51 @@ $(document).ready(function () {
     color: 'yellow',   // an option!
     textColor: 'black',
     selectable: true,
+    eventRender: function (event, element, view) {
+      if (view.name == 'listDay') {
+        element.find(".fc-list-item-time").append("<span class='closeon'>X</span>");
+      } else {
+        element.find(".fc-content").prepend("<span class='closeon'>X</span>");
+      }
+      element.find(".closeon").on('click', function () {
+        $.post("reserva/borrarreserva", {
+          idreserva: event.id,
+        }, function (data) {
+          //addEventCalendar(data.id, data.detalle, momentStart, momentEnd, tipoEvento)
+          alert("Se ha borrado el registro con id " + event.id);
+        })
+          .fail(function (err) {
+            alert(err);
+          });
+        $('#calendar').fullCalendar('removeEvents', event._id);
+
+        console.log('delete');
+      });
+    },
     select: function (start, end, event, view) {
       //Función para agregar eventos al calendario cuando se arrastra el mouse
       var momentStart = moment(start).format();
       var momentEnd = moment(end).format();
-      var agregar = true;
+      var agregar = false;
       //Validar que la reserva que se va a realizar este en el límite de las disponibilidades
-      if ($('#calendar').fullCalendar('clientEvents').length > 0) {
+      if ($('#calendar_reserva').fullCalendar('clientEvents').length > 0) {
         try {
-          $('#calendar').fullCalendar('clientEvents').forEach(function (element) {
+          $('#calendar_reserva').fullCalendar('clientEvents').forEach(function (element) {
 
             var dStartClickable = new Date(momentStart);
             var dEndClickable = new Date(momentEnd);
             var dStart = new Date(moment(element.start).format());
             var dEnd = new Date(moment(element.end).format());
 
-            //Comparación que no se solapen
-            if (((dStartClickable <= dStart && dEndClickable <= dStart) || (dStartClickable >= dEnd))) {
-              //agregarFechaCalendarioPersistida(momentStart, momentEnd);
-              
-            } else {
-              //No válido
-              alert("La fecha seleccionada se cruza con una disponibilidad existente");
-              //agregar = false;
+            //Se debe verificar que la fecha este dentro de los límites de las fechas
+            //disponibles, si hay una fecha que cumpla se agrega la reserva
+            if (dStart <= dStartClickable && dEndClickable <= dEnd) {
+              agregarFechaCalendarioPersistida(momentStart, momentEnd, EventType.Reserva);
               throw BreakException;
             }
+
           });
-          if(agregar)
-            agregarFechaCalendarioPersistida(momentStart, momentEnd, EventType.Reserva);
+          alert("No puedes reservar en el horario seleccionado");
         } catch (e) {
           if (e !== BreakException) throw e;
         }
@@ -270,10 +307,17 @@ $(document).ready(function () {
         });
     }
   });
+
+  var calendar;
   //Acciones que se ejecutan cuando se da click en el  botón consultar
   $("#btn-cons-reserva").click(function () {
+
+    if ($('#calendar').length > 0)
+      calendar = $('#calendar');
+    else
+      calendar = $('#calendar_reserva');
     //Borrar eventos actuales del calendario
-    $('#calendar').fullCalendar('removeEvents');
+    calendar.fullCalendar('removeEvents');
     //Realizar consulta de las reservas para el espacio seleccionado
     var idEspacio = $("#combobox").val();
     $.get("/reserva/consultarreservaporespacio?idespacio=" + idEspacio, function (data) {
@@ -281,7 +325,7 @@ $(document).ready(function () {
         if (data.length > 0) {
           data.forEach(reserva => {
             //Agregar eventos al calendario
-            addEventCalendar(reserva.id, reserva.nombre, reserva.fechainicio, reserva.fechafin, reserva.idestado);
+            addEventCalendar(reserva.id, reserva.detalle, reserva.fechainicio, reserva.fechafin, reserva.idestado);
           });
         }
       }
@@ -302,6 +346,10 @@ var EventType = Object.freeze(
 
 //Función para agregar eventos al calendario
 function addEventCalendar(id, title, start, end, tipoEvento) {
+  if ($('#calendar').length > 0)
+    calendar = $('#calendar');
+  else
+    calendar = $('#calendar_reserva');
   var newEvent = new Object();
   newEvent.id = id;
   newEvent.title = title;
@@ -319,7 +367,7 @@ function addEventCalendar(id, title, start, end, tipoEvento) {
       newEvent.color = 'yellow';
   }
 
-  $('#calendar').fullCalendar('renderEvent', newEvent, true);
+  calendar.fullCalendar('renderEvent', newEvent, true);
 }
 
 //Borrar evento del calendario por ID
@@ -329,17 +377,35 @@ function agregarFechaCalendarioPersistida(momentStart, momentEnd, tipoEvento) {
   //Válido
   //Enviar información al controlador
   var detalle = prompt('Ingresa el detalle de la reserva');
-  $.post("coordinador/creardisponibilidad", {
-    idespacio: $("#combobox").val(),
-    fechainicio: momentStart,
-    fechafin: momentEnd,
-    detalle: detalle
-  }, function (data) {
-    addEventCalendar(data.id, data.title, momentStart, momentEnd, tipoEvento)
+  switch (tipoEvento) {
+    case (EventType.Disponible):
+      $.post("coordinador/creardisponibilidad", {
+        idespacio: $("#combobox").val(),
+        fechainicio: momentStart,
+        fechafin: momentEnd,
+        detalle: detalle
+      }, function (data) {
+        addEventCalendar(data.id, data.detalle, momentStart, momentEnd, tipoEvento)
 
-    alert("success");
-  })
-    .fail(function (err) {
-      alert("Error consultando el servicio");
-    });
+        alert("success");
+      })
+        .fail(function (err) {
+          alert("Error consultando el servicio");
+        });
+      break;
+    case (EventType.Reserva):
+      $.post("persona/reservarespacio", {
+        idespacio: $("#combobox").val(),
+        fechainicio: momentStart,
+        fechafin: momentEnd,
+        detalle: detalle
+      }, function (data) {
+        addEventCalendar(data.id, data.detalle, momentStart, momentEnd, tipoEvento)
+      })
+        .fail(function (err) {
+          alert("Error consultando el servicio");
+        });
+      break;
+  }
+
 }

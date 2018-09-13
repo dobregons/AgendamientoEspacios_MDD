@@ -17,7 +17,7 @@ module.exports = {
   },
 
 
-  fn: function (inputs, exits) {
+  fn: async function (inputs, exits) {
 
     await Persona.destroy({ id: inputs.idpersona });
     return exits.success();

@@ -18,8 +18,17 @@ module.exports = {
 
 
   fn: async function (inputs, exits) {
-    await Espacio.destroy({ id: inputs.idespacio});
-    return exits.success();
+    let req = this.req;
+    let res = this.res;
+    if(req.user && req.user.idtipopersona==3/*Valida que sea coordinador*/)
+    {
+      await Espacio.destroy({ id: inputs.idespacio});
+      return exits.success();
+    }else {
+      // not logged in
+      return res.redirect('/');
+    }
+    
 
   }
 

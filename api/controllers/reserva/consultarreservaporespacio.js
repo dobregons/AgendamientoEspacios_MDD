@@ -33,11 +33,11 @@ module.exports = {
     if(!reserva2) { return res.notFound(); }
     return res.json(reserva2.rows);
     */
-    var reserva2 = await Reserva.query('\
-                    Select r.id, r.fechainicio, r.fechafin, r.idestado, e.nombre \
-                    from reserva r \
-                    join espacio e on r.idespacio = e.id \
-                    where idespacio=$1', [inputs.idespacio], function (err, rawResult) {
+    var reserva2 = await Reserva.query("\
+              Select r.id, r.fechainicio, r.fechafin, r.idestado, concat(p.nombres,' ', p.apellidos, '\n', r.detalle) as detalle \
+              from reserva r                      \
+              join persona p on r.idpersona = p.id \
+              where idespacio=$1", [inputs.idespacio], function (err, rawResult) {
         if (err) { return res.serverError(err); }
 
         sails.log(rawResult.rows);

@@ -37,20 +37,23 @@ module.exports = {
     let req = this.req;
     let res = this.res;
 
-    if (req.user) {
-      //Validar que no se cruce con la disponibilidad actual del espacio
-      //var disponibilidad = sails.controllers.reserva.consultarreservaporespacio(inputs.idespacio);
+    if (req.user) //Cualquier persona loggeada puede reservar un espacio
+    {
       //logged in
+      //Validar que no se cruce con la disponibilidad actual del espacio. VAlidación existente en frontend que se debe hacer en backend.
+      //TODO
+      
+      
       var reserva = new Object();
       //espacio.fechaingreso = Date.now();
       reserva.idespacio = inputs.idespacio;
-      reserva.idtipoactividad = 1;
+      reserva.idtipoactividad = 3;//Valor setteado mientras se completa desarrollo. No requerido para PMV.
       reserva.idpersona = req.user.id;
-      reserva.idestado = idestado;//Disponible
+      reserva.idestado = 2;//Reservado
       reserva.fechainicio = inputs.fechainicio;
       reserva.fechafin = inputs.fechafin;
       reserva.detalle = inputs.detalle;
-
+      
       var reservaCreada = await Reserva
         .create(reserva).fetch()
         // Uniqueness constraint violation
@@ -69,9 +72,17 @@ module.exports = {
           return;
         });
     } else
-      //Logout
-      return res.redirect('/');
+        //Logout
+        return res.redirect('/');
+    reservaCreada.detalle = req.user.nombres + " " + req.user.apellidos + "\n"+ reservaCreada.detalle;
+    //Envío de correo de reserva realizada
+    var correo = new Object()
+    correo.email = req.user.email;
+    correo.nombres = req.user.nombres;
+    correo.espacio = inputs.idespacio;
 
+    Mailer.enviarCorreoReservaRealizada(correo);
+    //Fin de envío de correo
     return exits.success(reservaCreada);
 
   }

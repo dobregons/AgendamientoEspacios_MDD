@@ -25,7 +25,7 @@ module.exports = {
   fn: async function (inputs, exits) {
     let req = this.req;
     let res = this.res;
-    if (req.user) {
+    if (req.user && req.idtipopersona==3/*Valida que sea coordinador*/) {
       // logged in
       var response = await Espacio.update({ id: inputs.idespacio })
         .set({

@@ -33,7 +33,7 @@ module.exports = {
     let req = this.req;
     let res = this.res;
 
-    if(req.user)
+    if(req.user && req.idtipopersona==3/*Valida que sea coordinador*/)
     {
       //Validar que no se cruce con la disponibilidad actual del espacio
       //var disponibilidad = sails.controllers.reserva.consultarreservaporespacio(inputs.idespacio);
@@ -68,7 +68,8 @@ module.exports = {
     }else
       //Logout
       return res.redirect('/');
-
+    //Msj para mostrar en el calendario
+    reservaCreada.detalle = req.user.nombres + " " + req.user.apellidos + "\n"+ reservaCreada.detalle;
     return exits.success(reservaCreada);
 
   }
