@@ -79,7 +79,7 @@ module.exports = {
     var correo = new Object()
     correo.email = req.user.email;
     correo.nombres = req.user.nombres;
-    correo.espacio = inputs.idespacio;
+    correo.espacio = reservaCreada.id;
 
     Mailer.enviarCorreoReservaRealizada(correo);
     //Fin de envío de correo

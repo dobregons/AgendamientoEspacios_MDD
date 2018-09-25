@@ -26,7 +26,7 @@ module.exports = {
     let req = this.req;
     let res = this.res;
 
-    if (req.user&& req.idtipopersona==3/*Valida que sea coordinador*/) {
+    if (req.user&& req.user.idtipopersona==3/*Valida que sea coordinador*/) {
       // logged in
 
       var espacio = new Object();

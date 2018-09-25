@@ -14,35 +14,36 @@ module.exports = {
     //   required: true,
     //   autoIncrement: true
     // },
-    idespacio: { 
-      type: 'number', 
-      required: true 
+    idespacio: {
+      type: 'number',
+      required: true
     },
-    idtipoactividad: { 
-      type: 'number', 
-      required: true 
+    idtipoactividad: {
+      type: 'number',
+      required: true
     },
-    idpersona: { 
-      type: 'number', 
-      required: true 
+    idpersona: {
+      type: 'number',
+      required: true
     },
-    idestado: { 
-      type: 'number', 
-      required: true 
+    idestado: {
+      type: 'number',
+      required: true,
+      //enum: { 'disponible': 1, 'reservado': 2, 'cambiosolicitado': 3 }
     },
-    fechainicio: { 
-      type: 'ref', 
-      required: true, 
-      columnType: 'timestamp' 
-    },
-    fechafin: { 
-      type: 'ref', 
-      required: false, 
+    fechainicio: {
+      type: 'ref',
+      required: true,
       columnType: 'timestamp'
     },
-    detalle: { 
-      type: 'string', 
-      required: false 
+    fechafin: {
+      type: 'ref',
+      required: false,
+      columnType: 'timestamp'
+    },
+    detalle: {
+      type: 'string',
+      required: false
     },
   },
 

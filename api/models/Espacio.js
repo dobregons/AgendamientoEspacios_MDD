@@ -49,6 +49,10 @@ module.exports = {
       type: 'number',
       required: false
     },
+    activo: {
+      type: 'boolean',
+      required: false
+    },
   },
 };
 

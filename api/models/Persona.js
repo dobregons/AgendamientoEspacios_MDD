@@ -40,22 +40,32 @@ module.exports = {
     },
     dedicacion: {
       type: 'number',
-      required: false //Crear tabla en base de datos
+      required: false, //Crear tabla en base de datos
+      //enum: ['exclusiva', 'tiempocompleto', 'catedra' ] 
     },
     password: {
       type: 'string',
       required: true
+    },
+    carrera: {
+      type: 'string',
+      required: false
+    },
+    estadopersona: {
+      type: 'number',
+      required: false,
+      //enum: ['activo', 'egresado', 'aplazado','suspendido']
     }
   },
   customToJSON: function () {
     return _.omit(this, ['password'])
   },
-  beforeCreate: function(user, cb){
-    
+  beforeCreate: function (user, cb) {
+
     //Encriptar clave
-    bcrypt.genSalt(10, function(err, salt){
-      bcrypt.hash(user.password, salt, null, function(err, hash){
-        if(err) return cb(err);
+    bcrypt.genSalt(10, function (err, salt) {
+      bcrypt.hash(user.password, salt, null, function (err, hash) {
+        if (err) return cb(err);
         user.password = hash;
         return cb();
       });

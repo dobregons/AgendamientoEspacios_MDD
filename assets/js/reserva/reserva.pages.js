@@ -239,7 +239,8 @@ $(document).ready(function () {
           idreserva: event.id,
         }, function (data) {
           //addEventCalendar(data.id, data.detalle, momentStart, momentEnd, tipoEvento)
-          alert("Se ha borrado el registro con id " + event.id);
+          //alert("Se ha borrado el registro con id " + event.id);
+          alert(data);
         })
           .fail(function (err) {
             alert(err);
@@ -379,7 +380,7 @@ function agregarFechaCalendarioPersistida(momentStart, momentEnd, tipoEvento) {
   var detalle = prompt('Ingresa el detalle de la reserva');
   switch (tipoEvento) {
     case (EventType.Disponible):
-      $.post("coordinador/creardisponibilidad", {
+      $.post("espacio/creardisponibilidad", {
         idespacio: $("#combobox").val(),
         fechainicio: momentStart,
         fechafin: momentEnd,

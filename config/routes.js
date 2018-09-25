@@ -23,35 +23,41 @@ module.exports.routes = {
   * `assets` directory)                                                      *
   *                                                                          *
   ***************************************************************************/
-
-  '/': {
-    view: 'pages/homepage'
-  },
+ 'POST /tipoespacio': { action: 'tipoespacio/create' },
+  //Home
+  '/': { view: 'pages/homepage' },
   '/home': 'HomeController.home',
-
-  'POST /tipoespacio': { action: 'tipoespacio/create' },
-  //Auth Routes
-  'GET /login': { view: 'pages/auth/login' },
-  'GET /register': { view: 'pages/auth/registro' },
-  'GET /reserva/consultarreservaporespacio/:idespacio': 'reserva/consultarreservaporespacio',
-  'POST /login': 'AuthController.login',
-  'POST /user': 'persona/crearpersona',
-  '/logout': 'AuthController.logout',
-  '/olvidarcontrasena' : { view: 'pages/auth/olvidarcontrasena' },
-  'POST /olvidarcontrasena' : 'AuthController.forgotpassword',
-  //Reserva Routes
-  '/reserva' : 'ReservaController.reserva',
-  'POST /coordinador/creardisponibilidad': 'coordinador/creardisponibilidad',
-  'POST /persona/reservarespacio': 'persona/reservarespacio',
-  'POST /reserva/borrarreserva': { action: 'reserva/borrarreserva' },
-  //Espacio Routes
-  '/crearespacio' : 'EspacioController.crearespacio',
-  '/administrarespacios' : 'EspacioController.administrarespacios',
+  //...........Auth Routes.........
+    //Views
+    '/login': { view: 'pages/auth/login' },
+    '/register': { view: 'pages/auth/registro' },
+    '/olvidarcontrasena': { view: 'pages/auth/olvidarcontrasena' },
+    //Action Methos
+    'GET /logout': { action: 'auth/logout' },
+    'POST /login': { action: 'auth/login' },
+    'POST /olvidarcontrasena': { action: 'auth/forgotpassword' },
+    'POST /user': { action: 'persona/crearpersona' },
   
-  '/modificarespacio/:idespacio' :'EspacioController.modificarespacio',
-  'POST /espacio': { action: 'coordinador/crearespacio' },
-  'POST /espacio/modificarespacio': { action: 'coordinador/modificarespacio' },
-  'POST /espacio/borrarespacio': { action: 'coordinador/borrarespacio' },
+  //..............Reserva Routes...........
+    //Views
+    '/reserva': 'ReservaController.reserva',
+    //Action Routes
+    'GET /reserva/consultarreservaporespacio/:idespacio': 'reserva/consultarreservaporespacio',
+    'POST /reserva/reservarespacio': 'persona/reservarespacio',
+    'POST /reserva/borrarreserva': { action: 'reserva/borrarreserva' },
+  //Espacio Routes
+    //Views
+    '/crearespacio': 'EspacioController.crearespacio',
+    '/administrarespacios': 'EspacioController.administrarespacios',
+    '/modificarespacio/:idespacio': 'EspacioController.modificarespacio',
+    //Actions
+    'POST /espacio': { action: 'espacio/crearespacio' },
+    'POST /espacio/modificarespacio': { action: 'espacio/modificarespacio' },
+    'POST /espacio/borrarespacio': { action: 'espacio/borrarespacio' },
+    'POST /espacio/creardisponibilidad': 'espacio/creardisponibilidad',
+
+  
+  
   //Email routes
   'POST /enviarcorreoreservarealizada': { action: 'clienteemail/enviarcorreoreservarealizada' },
   'POST /enviarcorreoreservacancelada': { action: 'clienteemail/enviarcorreoreservacancelada' },

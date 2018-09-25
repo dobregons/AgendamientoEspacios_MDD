@@ -18,8 +18,15 @@ module.exports = {
 
 
   fn: function (inputs, exits) {
-
-    return exits.success();
+    Persona.findOne({ id: req.user.id }, function (err, persona) {
+      if ((err) || (!persona)) {
+          return res.send({ err });
+      }
+      return res.view("pages/modificarespacio", {
+          persona: persona,
+      });
+    });
+    
 
   }
 

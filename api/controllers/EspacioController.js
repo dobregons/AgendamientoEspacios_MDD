@@ -4,7 +4,7 @@ module.exports = {
             var tiposespacio = Tipoespacio.find({}, function (err, tiposespacio) {
                 //data.lists = categories;
                 //res.view("pages/home",data); 
-                return res.view("pages/crearespacio", {
+                return res.view("pages/espacio/crearespacio", {
                     user: req.user,
                     tiposespacio: tiposespacio
                 });
@@ -21,7 +21,7 @@ module.exports = {
                 return res.send({ err });
             }
             var tiposespacio = Tipoespacio.find({}, function (err, tiposespacio) {
-                return res.view("pages/modificarespacio", {
+                return res.view("pages/espacio/modificarespacio", {
                     user: req.user,
                     tiposespacio: tiposespacio,
                     espacio: espacio
@@ -46,7 +46,7 @@ module.exports = {
     administrarespacios: function (req, res) {
         if (req.user) {
             var espacios = Espacio.find({}, function (err, espacios) {
-                return res.view("pages/administrarespacio", {
+                return res.view("pages/espacio/administrarespacio", {
                     user: req.user,
                     espacios: espacios
                 });

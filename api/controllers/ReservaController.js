@@ -8,7 +8,7 @@ module.exports = {
         // });
         if (req.user) {
             var espacios = Espacio.find({}, function (err, espacios) {
-                return res.view("pages/reserva", {
+                return res.view("pages/reserva/reserva", {
                      user: req.user,
                     espacios: espacios
                 });
